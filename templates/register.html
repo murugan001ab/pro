@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/login.css')}}">
+</head>
+
+<body>
+    <div class="sum">
+        <form action="/register" method="post">
+            <h1>Welcome</h1>
+
+            <div class="input-box">
+                <input name="name" class="in username" type="text" placeholder="Name" required>
+            </div>
+            <div class="input-box">
+                <input name="email" class="in email" type="text" placeholder="Email" required>
+            </div>
+            <div class="input-box">
+                <input name="mobile" class="in mobile" type="text" placeholder="Mobile" required>
+            </div>
+            <div class="input-box">
+                <input name="password" class="in password" type="password" placeholder="Password" required>
+            </div>
+
+
+            <button type="submit" class="btn">Register</button>
+
+            <div class="register">
+                <p>have a account?<a href="">Login</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

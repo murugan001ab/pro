@@ -1,0 +1,104 @@
+    .dash {
+        position: absolute;
+        top: 50px;
+        padding: 10px;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    .cantainerdash {
+        width: 100%;
+        height: 250px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+    
+    .box {
+        width: 200px;
+        height: 200px;
+        padding: 10px;
+        margin: 10px;
+        display: flex;
+        align-self: auto;
+        position: relative;
+        background-color: #8e44ad;
+        border-radius: 7px;
+    }
+    
+    .box-c {
+        position: relative;
+        padding: 5px;
+        font-size: 25px;
+        border-radius: 2px;
+        width: 70px;
+        height: 50px;
+        color: white;
+        text-align: center;
+        align-items: center;
+        padding-top: 5px;
+        background-color: #9b59b6;
+        font-weight: 400;
+    }
+    
+    .box-t {
+        position: absolute;
+        top: 5px;
+        right: 18px;
+        color: #bdc3c7;
+    }
+    
+    .box-ti {
+        font-weight: 800;
+        font-size: 17px;
+        text-align: center;
+    }
+    
+    .box-li {
+        position: absolute;
+        top: 150px;
+        color: #bdc3c7;
+    }
+    
+    .box-li>a {
+        color: #bdc3c7;
+        font-weight: 300;
+        font-size: large;
+        text-decoration: none;
+    }
+    
+    .box-li>a:hover {
+        color: aliceblue;
+        font-weight: 600;
+    }
+    
+    .box-li i {
+        padding-left: 70px;
+    }
+    
+    .box-l {
+        position: absolute;
+        top: 100px;
+        right: 60px;
+        color: white;
+    }
+    
+    .box-f {
+        position: absolute;
+        top: 60px;
+        right: 125px;
+        font-size: 60px;
+        color: azure;
+        font-weight: 800;
+    }
+    
+    .box-p {
+        position: absolute;
+        top: 80px;
+        right: 125px;
+        border: 5px solid white;
+        border-radius: 50%;
+        height: 60px;
+        width: 60px;
+    }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoginPage</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/login.css')}}">
+</head>
+
+<body>
+    <div class="sum">
+        <form method="post" action="/login">
+            <h1>Welcome</h1>
+            {% block content %}{% endblock %}
+            <div class="input-box">
+                <input name="username" class="in username" type="text" placeholder="Mobile or Username" required>
+            </div>
+            <div class="input-box">
+                <input name="password" class="in password" type="password" placeholder="Password" required>
+            </div>
+            <div class="remeber-forget">
+                <label> <input type="checkbox">remeber me</label>
+                <a href="">Forgetpassword?</a>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+
+            <div class="register">
+                <p>Dont't have an account?<a href="">Register</a></p>
+            </div>
+            <script src="{{url_for('static',filename='js/login.js')}}"></script>
+        </form>
+    </div>
+</body>
+
+</html>

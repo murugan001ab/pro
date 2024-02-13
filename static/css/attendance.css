@@ -1,0 +1,50 @@
+.content {
+    margin-top: 50px;
+}
+
+.tablel {
+    width: 90%;
+    user-select: none;
+    margin: 50px;
+}
+
+.tablel tr th,
+td {
+    padding: 20px;
+    font-size: medium;
+    font-weight: 400;
+}
+
+.tablel thead {
+    background: #d35400;
+    color: white;
+    font-weight: 500;
+}
+
+td {
+    color: rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgb(247, 173, 108);
+}
+
+tbody tr:nth-child(2n) {
+    background: #ffd6b3;
+}
+
+tbody tr:last-child {
+    border-bottom: 2px solid #d35400;
+}
+
+td:hover {
+    color: black;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 30px;
+    margin-left: 50px;
+}
+
+.p {
+    text-align: center;
+    font-size: large;
+}

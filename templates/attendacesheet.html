@@ -1,0 +1,33 @@
+{% extends "base.html"%} {% block head%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/attendancesheet.css')}}"> {%endblock%} {% block content %}
+<div class="contents">
+    <h3 class="title">Attendancesheet</h3>
+    <center>
+        <form action="/asheet" method="post" class="form" autocomplete="off">
+            <table class="tablel">
+                <thead>
+                    <tr>
+                        <th>Employee Id</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <td><label for="" name="uid">{{i[0]}}</label></td>
+                        <td><label for="" name="uname">{{i[1]}}</label></td>
+                        <td>
+                            <input type="checkbox" name="uid" value="{{i[0]}}{{i[1]}}">
+
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="submit" name="submit" class="submit" value="submit">
+        </form>
+    </center>
+</div>
+{%endblock%}

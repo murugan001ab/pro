@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static',filename='js/jqeery.min.js')}}"></script>
+    <script src="{{url_for('static',filename='js/classadd.js')}}"></script>
+    {% block head %}{% endblock%}
+</head>
+
+<body>
+
+    <div class="cantainer-menu" id="con">
+        <p>main</p>
+        <ul class="nav navbar-pills">
+            <li><a href="{{url_for('main.dash')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li><a href="{{url_for('main.attendance')}}">attandance</a></li>
+            <li><a href="{{url_for('main.profiles')}}">Employees</a></li>
+        </ul>
+        <p>management</p>
+        <ul class="nav navbar-pills">
+            <li><a href="">face register</a></li>
+            <li><a href="{{url_for('main.asheet')}}">attandance sheet</a></li>
+            <li><a href="{{url_for('main.idcard')}}">ID Card</a></li>
+            <li><a href="#">menu-4</a></li>
+            <li><a href="#">menu-5</a></li>
+        </ul>
+        <div class="nav-overlay" id="over"></div>
+    </div>
+    <div class="cantainer navbar-fixed-top">
+        <nav class="navbar navbar-inverse">
+
+            <div class="container-fluid">
+
+                <button id="bar-b" class=" navbar-left bar-b">
+                        <span class="bar"></span>
+                        <span class="bar"></span> 
+                        <span class="bar"></span>
+                    </button>
+                <h3 class=" nav navbar-nav brand">SJC</h3>
+                <form class="navbar-form navbar-left" action="">
+                    <div class=" search">
+                        <input type="text" class="search-bar" placeholder="Search"> <i class="fa fa-search search-b"></i>
+
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="bell"><a href="#"><i class="fa fa-bell"> <span class="badge notif">5</span></i></a>
+
+                    </li>
+                    <li><a href="{{url_for('auth.signout')}}"><i class="fa fa-sign-in"></i> sign out</a></li>
+                    <li><a href="#"><i class="fa fa-user"></i> about</a></li>
+                    <li class=" profile">
+                        <a href="#"><img src="" alt=""></a>
+                    </li>
+                </ul>
+
+
+            </div>
+        </nav>
+    </div>
+    <div class="prof">
+        <div class="navoverlay" id="oover"></div>
+        <img src="" alt="" id="img">
+        <label for="">{{email}}</label>
+        <label for="">admin</label>
+
+    </div>
+    <div class="content"> {% block content %} {% endblock %}</div>
+</body>
+
+</html>

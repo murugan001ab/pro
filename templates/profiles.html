@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/liste.css')}}"> {% endblock %} {% block content %}
+<div class="content">
+    <div class="list-t">Employes</div>
+    <p class="list-p">this employee list</p>
+    <div class="line">
+        <div class="listsearch">
+            <input type="text" class="search-bar" placeholder="Search"> <i class="fa fa-search search-b"></i>
+        </div>
+        <div>
+            <a href="{{url_for('main.adds')}}" class="addb">
+                ADD
+                <i class="fa fa-plus"></i>
+            </a>
+
+
+        </div>
+
+    </div>
+    <div class="list-f">
+
+        {% for row in datas %}
+
+        <div class="box box{{ loop.index }}">
+            <img class="photo" src="static/css/images/{{row[7]}}" alt="no image">
+            <div class="pro pro{{ loop.index }}">
+                <label for="">name   :</label><label for="">{{row[1]}}</label><br>
+                <label for="">class:</label><label for="">{{ row[2] }}</label><br>
+                <label for="">email  :</label><label for="">{{ row[3] }}</label><br>
+                <label for="">mobile:</label><label for="">{{ row[4] }}</label><br>
+                <label for="">role   :</label><label for="">{{ row[5] }}</label><br>
+                <label for="">age:</label><label for="">{{ row[6] }}</label><br>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock%}

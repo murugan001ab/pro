@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoginPage</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/login.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/fo.css')}}">
+
+</head>
+
+<body>
+    <div class="sum">
+        <form method="post" action="/forget">
+            <h1>Welcome</h1>
+            <div class="input-box">
+                <input class="in" type="text" placeholder="Email or username" name="username" value="{{username}}" required>
+            </div>
+            <div class="verify">
+                <button class="otp-btn" type="submit" name="action" value="sent">set otp</button>
+                <input class="otp-in" type="text" placeholder="otp" name="otp">
+            </div>
+            <div class="input-box">
+                <input class="in" type="password" placeholder="Password" name="pword">
+            </div>
+            <div class="input-box">
+                <input class="in" type="password" placeholder=" conform Password" name="cpword">
+            </div>
+            <button type="submit" class="btn" name="action" value="change">Change</button>
+        </form>
+    </div>
+</body>
+
+</html>
