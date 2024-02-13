@@ -90,7 +90,7 @@ def asheetd():
 
         
         for i,y in zip(data,student_selected):
-            if ((i[0] != int(y[0])or i[0]==int(y[0])) and i[2]!=date) or (i[0]!=int(y[0]) and (i[2]!=date)):
+            if ((i[0]!=int(y[0]) and i[2]!=date) or (i[0]==int(y[0]) and i[2]!=date) or (i[0]!=int(y[0]) and i[2]==date) ):
                 status='present'
           
                 try:
