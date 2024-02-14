@@ -10,6 +10,9 @@ def create_app():
     from .auth import auth
     app.register_blueprint(auth)
 
+
+    from .idcard import idc
+    app.register_blueprint(idc)
     
     
     return app

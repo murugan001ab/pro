@@ -18,18 +18,27 @@ def register():
         email=request.form.get('email')
         mobile=request.form.get('mobile')
         password=request.form.get('password') 
-        print(name,email,mobile,password)
+        floar=request.form.get('floar')
+        street=request.form.get('street')
+        city=request.form.get('city')
+        pin=request.form.get('pin')
+        clogo=request.files['clogo']
+        clogon=name+'.png'
+        path='pro/static/id/clogo/'+clogon
+        clogo.save(path)
+        add=floar+','+street+','+city+','+pin
+        print(name,email,mobile,password,add,clogo.filename)
         try:
             con=sql.connect('org.db')
             cur=con.cursor()
-            cur.execute("insert into admins(name,email,mobile,password) values(?,?,?,?)",(name,email,mobile,password))
+            cur.execute("insert into admins(name,email,mobile,password,cadd,clogo) values(?,?,?,?,?,?)",(name,email,mobile,password,add,clogo.filename))
             con.commit()
             try:
                 dbname=name+'.db'
                 path=os.path.join('pro/db/',dbname)
                 con=sql.connect(path)
                 cor=con.cursor()
-                cor.execute('''create table if not exists profiles ( id INTEGER PRIMARY KEY  AUTOINCREMENT, name TEXT, class text, email TEXT, mobile INT, role TEXT, age INTEGER, file TEXT);''')
+                cor.execute('''create table if not exists profiles ( id INTEGER PRIMARY KEY  AUTOINCREMENT, name TEXT, class text, email TEXT, mobile INT, role TEXT, age INTEGER, file TEXT,cname text);''')
                 cor.execute('''create table if not exists newuser ( uid INTEGER PRIMARY KEY  AUTOINCREMENT, username TEXT, email TEXT, mobile NUMERIC(10), password TEXT);''')
                 cor.execute('''CREATE TABLE IF NOT EXISTS attendance (id INTEGER,username TEXT,time_in text,status TEXT,FOREIGN KEY (id) REFERENCES newuser(id),FOREIGN KEY (username) REFERENCES newuser(username))''')
                 con.commit()
@@ -39,6 +48,7 @@ def register():
         except:
             print('connection error')
     return redirect(url_for('auth.login'))
+
 
 @auth.route('/login')
 def login():

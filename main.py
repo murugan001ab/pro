@@ -36,7 +36,7 @@ def addst():
         email=request.form.get('email')
         mobile=request.form.get('mobile')
         file=request.files['file']
-        filename=file.filename
+        filename=name+'.png'
         if file:
             filepath="pro/static/css/images/"+filename
             file.save(filepath)
@@ -138,10 +138,7 @@ def profiles():
         return redirect(url_for('auth.login'))
 
 
-@main.route('/idcard')
-def idcard():
-    if 'logged_in_admin' in session and session["logged_in_admin"]:
-        return render_template('idcard.html')
+
 
 
 
