@@ -1,0 +1,30 @@
+{% extends "base.html"%} {% block head%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/idcard.css')}}"> {%endblock%} {% block content %}
+<div class="content">
+    <h3 class="title">ID CARD</h3>
+    <p class="p">you can download employee or staff id card Employee</p>
+
+    <table class="tablel">
+        <thead>
+            <tr>
+                <th>S.no</th>
+                <th>Employee Id</th>
+                <th>Name</th>
+                <th>Id card</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+                <td><a href="static/id/{{i[1]}}.png" download><button class="button">Download <i class="fa fa-download"></i></button></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{%endblock%}
