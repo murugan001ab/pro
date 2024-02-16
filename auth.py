@@ -31,7 +31,7 @@ def register():
         try:
             con=sql.connect('org.db')
             cur=con.cursor()
-            cur.execute("insert into admins(name,email,mobile,password,cadd,clogo) values(?,?,?,?,?,?)",(name,email,mobile,password,add,clogo.filename))
+            cur.execute("insert into admins(name,email,mobile,password,cadd,clogo) values(?,?,?,?,?,?)",(name,email,mobile,password,add,clogon))
             con.commit()
             try:
                 dbname=name+'.db'
@@ -57,7 +57,6 @@ def login():
 @auth.route('/login',methods=['POST','GET'])
 def logina():
     if request.method=='POST':
-    
         username=request.form.get('username')
         password=request.form.get('password')
         con=sql.connect('org.db')
@@ -68,6 +67,7 @@ def logina():
             for i in data:
               if (i[1] or i[2])==username:
                   if (i[3])==password:
+                
                       email=i[2]
                       dbname=i[1]+'.db'
                       session['logged_in_admin']=True

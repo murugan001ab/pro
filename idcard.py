@@ -105,7 +105,7 @@ def idcard():
                 cname=i[0]
                 cnum=i[1]
                 cadd=i[2]
-                clogo='pro/static/id/clogo/log.png'
+                clogo='pro/static/id/clogo/'+i[3]
             
             con.close()
         except Exception as e:
@@ -126,5 +126,6 @@ def idcard():
             ubar="pro/static/id/userbar/"+str(id)+'.png'
             idcardu(cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar)
         return render_template('idcard.html',data=data)
+    return render_template('auth.login')
     
 

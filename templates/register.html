@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='css/login.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/re.css')}}">
 </head>
 
 <body>
@@ -13,43 +13,39 @@
         <form action="/register" method="post" enctype="multipart/form-data">
             <h1>Welcome</h1>
 
-            <div class="input-box">
-                <input name="name" class="in username" type="text" placeholder="Name" required>
-            </div>
-            <div class="input-box">
-                <input name="email" class="in email" type="text" placeholder="Email" required>
-            </div>
-            <div class="input-box">
-                <input name="mobile" class="in mobile" type="text" placeholder="Mobile" required>
-            </div>
-            <div class="input-box">
-                <input name="password" class="in password" type="password" placeholder="Password" required>
+            <div class="side">
+                <div class="input-box">
+                    <input name="name" class="in username" type="text" placeholder="Name" required>
+
+                    <input name="floar" class="in password" type="number" placeholder="Floar" required>
+
+                    <input name="email" class="in email" type="text" placeholder="Email" required>
+
+                    <input name="street" class="in password" type="text" placeholder="Street" required>
+
+                    <input name="mobile" class="in mobile" type="text" placeholder="Mobile" required>
+
+                    <input name="city" class="in password" type="text" placeholder="City" required>
+
+                    <input name="password" class="in password" type="password" placeholder="Password" required>
+
+                    <input name="pin" class="in password" type="number" placeholder="PinCode" required>
+
+                </div>
+
+                <div class="register">
+                    <label for="clogo" class="file1">Logo</label>
+                    <input name="clogo" class="file" type="file" value="Logo" required>
+                    <input type="submit" class="btn" value="Register">
+
+                </div>
+                <div class="register1">
+                    <p>Already have an account? <a href="{{url_for('auth.login')}}">Login</a></p>
+                </div>
             </div>
 
-            <div class="input-box">
-                <input name="floar" class="in password" type="number" placeholder="floar" required>
-            </div>
-            <div class="input-box">
-                <input name="street" class="in password" type="text" placeholder="street" required>
-            </div>
-            <div class="input-box">
-                <input name="city" class="in password" type="text" placeholder="city" required>
-            </div>
-
-            <div class="input-box">
-                <input name="pin" class="in password" type="number" placeholder="PinCode" required>
-            </div>
-
-            <input name="clogo" class="in password" type="file" placeholder="LOGO" required>
-
-
-
-            <button type="submit" class="btn">Register</button>
-
-            <div class="register">
-                <p>have a account?<a href="">Login</a></p>
-            </div>
-        </form>
+    </div>
+    </form>
     </div>
 </body>
 

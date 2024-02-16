@@ -7,7 +7,7 @@ main=Blueprint('main',__name__)
 @main.route('/')
 def home():
     
-    return 'helo'
+    return render_template('index.html')
 
 @main.route('/dash')
 def dash():
@@ -44,7 +44,7 @@ def addst():
             path=session['db']
             con=sql.connect(path)
             cor=con.cursor()
-            cor.execute("insert into profiles(name,class,email,mobile,role,age,file) values(?,?,?,?,?,?,?)",(name,clas,email,mobile,role,age,file.filename))
+            cor.execute("insert into profiles(name,class,email,mobile,role,age,file) values(?,?,?,?,?,?,?)",(name,clas,email,mobile,role,age,filename))
             cor.execute("insert into newuser(username,email,mobile,password) values(?,?,?,?)",(name,email,mobile,name))
 
             con.commit()
@@ -61,6 +61,7 @@ def addst():
 @main.route('/asheet')
 def asheet():
     if 'logged_in_admin' in session and session['logged_in_admin']:
+        
         path=session['db']
         con=sql.connect(path)
         cur=con.cursor()
@@ -80,8 +81,9 @@ def asheetd():
         path=session['db']
         con=sql.connect(path)
         cur=con.cursor()
-        student_selected=request.form.getlist('uid')
-        cur.execute("select id,username,date from attendance")
+        student_selected=[]
+        student_selected.append(request.form.getlist('uid'))
+        cur.execute("select id,date from attendance")
         data=cur.fetchall()
         if data:
             print(data)
@@ -90,16 +92,24 @@ def asheetd():
 
         
         for i,y in zip(data,student_selected):
-            if ((i[0]!=int(y[0]) and i[2]!=date) or (i[0]==int(y[0]) and i[2]!=date) or (i[0]!=int(y[0]) and i[2]==date) ):
-                status='present'
+            print(i)
+            print(y)
+
+        
+            # if (i[0]!=int(y[0]) and i[1]!=y[1]):
+            #     print(i)
+            #     status='present'
           
-                try:
-                    cur.execute("insert into attendance values(?,?,?,?,?)",(int(y[0]),y[1::],date,time,status))
-                    con.commit()
-                except:
-                    print("insert error")
-            else:
-                print("condition not stat")
+            #     try:
+            #         cur.execute("insert into attendance values(?,?,?,?,?)",(int(y[0]),y[1::],date,time,status))
+            #         con.commit()
+            #     except:
+            #         print("insert error")
+
+            # else:
+
+            #     print("condition not stat")
+                
         
            
     return redirect(url_for("main.attendance"))
@@ -114,7 +124,6 @@ def attendance():
         cur=con.cursor()
         cur.execute("select * from attendance where date=?",(date,))
         data=cur.fetchall()
-        print(data)
         return render_template('attendance.html',data=data)
     else:
         return redirect(url_for('auth.login'))

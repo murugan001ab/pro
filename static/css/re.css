@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-image: url('images/3030038.jpg');
+}
+
+.sum {
+    border-radius: 10px;
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    width: 840px;
+    color: #fff;
+}
+
+.sum h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+.input-box input::placeholder {
+    color: #fff;
+}
+
+.sum .remeber-forget {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+}
+
+.remeber-forget label input {
+    accent-color: #fff;
+    margin-right: 3px;
+}
+
+.remeber-forget a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.remeber-forget a:hover {
+    text-decoration: underline;
+}
+
+.sum .register1 {
+    font-size: medium;
+    padding-left: 25px;
+    padding-bottom: 25px;
+}
+
+.register1 p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register1 p a:hover {
+    text-decoration: underline;
+}
+
+.side .input-box input {
+    margin: 10px;
+    margin: 15px 10px;
+    width: 47%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    font-size: 16px;
+    color: #fff;
+    padding: 12px;
+}
+
+.sum .btn {
+    margin: 10px;
+    margin: 15px 10px;
+    width: 10%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    font-size: 16px;
+    color: #fff;
+    padding: 12px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    margin-left: 125px;
+}
+
+.register {
+    padding-bottom: 15px;
+    display: flex;
+}
+
+.file,
+.file1 {
+    font-size: medium;
+    margin-left: 25px;
+    margin-top: 25px;
+}
