@@ -3,7 +3,16 @@
 <div class="content">
     <h3 class="title">Attendance</h3>
     <p class="p">Employee attendance date ways</p>
-
+    <center>
+        <form action="/attendance" method="get">
+            <select name="role">
+        <option value="student" selected>student</option>
+        <option value="staff">staff</option>
+        <option value="nonstaff">non tech staff</option>
+        </select>
+            <input type="submit" value="select">
+        </form>
+    </center>
     <table class="tablel">
         <thead>
             <tr>

@@ -1,0 +1,44 @@
+{% extends "base.html"%} {% block head%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/attendancesheet.css')}}"> {%endblock%} {% block content %}
+<div class="contents">
+    <h3 class="title">Attendancesheet</h3>
+
+    <center>
+        <form action="/suasheet" method="get">
+            <label for="dept">Chose dept:</label>
+            <select name="dept">
+        <option value="cs">Bsc-cs</option>
+        <option value="bca">Bca</option>
+        <option value="b.com">b.com</option>
+        </select>
+            <input type="submit" value="select">
+        </form>
+        <form action="/suasheet" method="post" class="form" autocomplete="off">
+
+            <table class="tablel">
+                <thead>
+                    <tr>
+                        <th>Employee Id</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <td><label for="" name="uid">{{i[0]}}</label></td>
+                        <td><label for="" name="uname">{{i[1]}}</label></td>
+                        <td>
+                            <input type="checkbox" name="list" value="{{i[0]}},{{i[1]}}">
+
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="submit" name="submit" class="submit" value="submit">
+        </form>
+    </center>
+</div>
+{%endblock%}

@@ -1,0 +1,17 @@
+try:
+            path=session['db']
+            con=sql.connect(path)
+            cor=con.cursor()
+            con.row_factory=sql.Row
+            
+            if request.method=="GET":
+                sudept=request.args.get('dept')
+                print(sudept)
+                cor.execute("select*from student where sudept=?",(sudept,))
+          
+                data=cor.fetchall()
+
+            return render_template('student.html',datas=data)
+        except:
+            print("insert erorr")
+        

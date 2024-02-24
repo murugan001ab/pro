@@ -3,7 +3,16 @@
 <div class="content">
     <h3 class="title">ID CARD</h3>
     <p class="p">you can download employee or staff id card Employee</p>
-
+    <center>
+        <form action="/idcard" method="get">
+            <select name="list">
+    <option value="student">student</option>
+    <option value="staff">staff</option>
+    <option value="nonstaff">non tech staff</option>
+    </select>
+            <input type="submit" value="select">
+        </form>
+    </center>
     <table class="tablel">
         <thead>
             <tr>
@@ -20,7 +29,7 @@
                 <td>{{ loop.index }}</td>
                 <td>{{i[0]}}</td>
                 <td>{{i[1]}}</td>
-                <td><a href="static/id/{{i[1]}}.png" download><button class="button">Download <i class="fa fa-download"></i></button></a></td>
+                <td><a href="static/id/{{i[0]}}.png" download><button class="button">Download <i class="fa fa-download"></i></button></a></td>
             </tr>
             {% endfor %}
         </tbody>

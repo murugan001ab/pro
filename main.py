@@ -30,13 +30,13 @@ def adds():
 def addst():
     if request.method =="POST":
         name=request.form.get('name')
-        age=request.form.get('age')
+        
         role=request.form.get('role')
-        clas=request.form.get('class')
+        dept=request.form.get('dept')
         email=request.form.get('email')
         mobile=request.form.get('mobile')
         file=request.files['file']
-        filename=name+'.png'
+        filename=mobile+'.png'
         if file:
             filepath="pro/static/css/images/"+filename
             file.save(filepath)
@@ -44,35 +44,51 @@ def addst():
             path=session['db']
             con=sql.connect(path)
             cor=con.cursor()
-            cor.execute("insert into profiles(name,class,email,mobile,role,age,file) values(?,?,?,?,?,?,?)",(name,clas,email,mobile,role,age,filename))
-            cor.execute("insert into newuser(username,email,mobile,password) values(?,?,?,?)",(name,email,mobile,name))
+            cname=str(path).split("/")[2]
+            cname=cname.split('.')[0]
+            
+            date=datetime.now()
+            date=date.strftime("%Y")[2::]
+
+            cor.execute("select sno from staff")
+            data=cor.fetchall()
+            
+            
+            if not data:
+                sid=cname[0]+date+dept+role[0]+'1'
+
+                cor.execute("insert into staff(sid,sname,sdept,semail,smobile,cname,sphoto,sbar,spass,role) values(?,?,?,?,?,?,?,?,?,?)",(sid,name,dept,email,mobile,cname,filename,mobile,name,role))
+            else:
+                data=int(data[-1][0])+1
+                sid=cname[0]+date+dept+role[0]+str(data)
+                cor.execute("insert into staff(sid,sname,sdept,semail,smobile,cname,sphoto,sbar,spass,role) values(?,?,?,?,?,?,?,?,?,?)",(sid,name,dept,email,mobile,cname,filename,name,name,role))
 
             con.commit()
             con.close()
             return redirect(url_for('main.profiles'))
-        except:
-            print("insert erorr")
+        except Exception as e:
+            print("insert erorr",e)
 
         
     return redirect(url_for('main.profiles'))    
 
     
 
-@main.route('/asheet')
-def asheet():
+@main.route('/sasheet')
+def sasheet():
     if 'logged_in_admin' in session and session['logged_in_admin']:
         
         path=session['db']
         con=sql.connect(path)
         cur=con.cursor()
-        cur.execute("select uid,username from newuser")
+        cur.execute("select sid,sname from staff")
         data=cur.fetchall()
 
         return render_template('attendacesheet.html',data=data)
     else:
         return redirect(url_for('auth.login'))
     
-@main.route('/asheet',methods=['POST','GET'])
+@main.route('/sasheet',methods=['POST'])
 def asheetd():
     if request.method=="POST":
         d=datetime.now()
@@ -81,48 +97,90 @@ def asheetd():
         path=session['db']
         con=sql.connect(path)
         cur=con.cursor()
+
         student_selected=[]
-        student_selected.append(request.form.getlist('uid'))
-        cur.execute("select id,date from attendance")
-        data=cur.fetchall()
-        if data:
-            print(data)
-        else:
-            data=('0','0','0'),('0','0','0')
+        student_selected=request.form.getlist('list')
+        role="staff"
+        print(student_selected)
+        for i in student_selected:
+            status='present'
+            i,j=i.split(",")[0],i.split(",")[1]
+            print(i,j)
+            try:
+                cur.execute("select id,date from attendance where username=? and date=?",(str(i),date))
+                data=cur.fetchall()
+                if len(data)==0:
 
-        
-        for i,y in zip(data,student_selected):
-            print(i)
-            print(y)
+                    cur.execute("insert into attendance(id,username,date,stime_in,status,role) values(?,?,?,?,?,?)",(str(i),str(j),date,time,status,role))
+                    con.commit()
+                    
+                else:
+                    print(data)
+            except Exception as e:
+                print("insert error",e)
 
-        
-            # if (i[0]!=int(y[0]) and i[1]!=y[1]):
-            #     print(i)
-            #     status='present'
-          
-            #     try:
-            #         cur.execute("insert into attendance values(?,?,?,?,?)",(int(y[0]),y[1::],date,time,status))
-            #         con.commit()
-            #     except:
-            #         print("insert error")
-
-            # else:
-
-            #     print("condition not stat")
-                
-        
-           
     return redirect(url_for("main.attendance"))
+
+@main.route('/suasheet')
+def suasheet():
+    if 'logged_in_admin' in session and session['logged_in_admin']:
+        
+        path=session['db']
+        con=sql.connect(path)
+        cur=con.cursor()
+        if request.method=="GET":
+            sudept=request.args.get('dept')
+            print(sudept)
+        cur.execute("select suid,suname from student where sudept=?",(sudept,))
+        data=cur.fetchall()
+
+        return render_template('suas.html',data=data)
+    else:
+        return redirect(url_for('auth.login'))
+    
+@main.route('/suasheet',methods=['POST'])
+def suasheetd():
+    if request.method=="POST":
+        d=datetime.now()
+        date=d.strftime("%d/%m/%Y")
+        time=d.strftime("%H:%M:%S")
+        path=session['db']
+        con=sql.connect(path)
+        cur=con.cursor()
+
+        student_selected=[]
+        student_selected=request.form.getlist('list')
+        role="student"
+        print(student_selected)
+        for i in student_selected:
+            status='present'
+            i,j=i.split(",")[0],i.split(",")[1]
+            print(i,j)
+            try:
+                cur.execute("select id,date from attendance where username=? and date=?",(str(i),date))
+                data=cur.fetchall()
+                if len(data)==0:
+
+                    cur.execute("insert into attendance(id,username,date,stime_in,status,role) values(?,?,?,?,?,?)",(str(i),str(j),date,time,status,role))
+                    con.commit()
+                    
+                else:
+                    print(data)
+            except Exception as e:
+                print("insert error",e)
+
+    return redirect(url_for("main.attendance"))
+    
 
 
 @main.route('/attendance')
 def attendance():
     if 'logged_in_admin' in session and session['logged_in_admin']:
         date=datetime.today().strftime("%d/%m/%Y")
-        print(date)
+        role=request.args.get('role')
         con=sql.connect(session['db'])
         cur=con.cursor()
-        cur.execute("select * from attendance where date=?",(date,))
+        cur.execute("select * from attendance where date=? and role=?",(date,role))
         data=cur.fetchall()
         return render_template('attendance.html',data=data)
     else:
@@ -133,22 +191,85 @@ def attendance():
 def profiles():
     if 'logged_in_admin' in session and session['logged_in_admin']:
         try:
+           
             path=session['db']
             con=sql.connect(path)
             cor=con.cursor()
             con.row_factory=sql.Row
-            cor.execute("select * from profiles")
+            cor.execute("select * from staff")
             data=cor.fetchall()
-            return render_template('profiles.html',datas=data)
+            return render_template('staff.html',datas=data)
         except:
             print("insert erorr")
         
     else:
         return redirect(url_for('auth.login'))
 
+@main.route('/suprofiles')
+def suprofiles():
+    if 'logged_in_admin' in session and session['logged_in_admin']:
+        path=session['db']
+        con=sql.connect(path)
+        cur=con.cursor()
+        if request.method=="GET":
+            sudept=request.args.get('dept')
+            print(sudept)
+        cur.execute("select * from student where sudept=?",(sudept,))
+        data=cur.fetchall()
+        return render_template('student.html',datas=data)
+    else:
+        return redirect(url_for('auth.login'))
 
+@main.route('/suadds')
+def suadds():
+    if 'logged_in_admin' in session and session['logged_in_admin']:
 
+        return render_template('suadds.html')
+    else:
+        return redirect(url_for('auth.login'))
+    
+@main.route('/addsu',methods=['POST','GET'])
+def addsu():
+    if request.method =="POST":
+        date=datetime.now()
+        date=date.strftime("%Y")[2::]
+        name=request.form.get('name')
+        sudept=request.form.get('dept')
+        sec=request.form.get('sec')
+        email=request.form.get('email')
+        mobile=request.form.get('mobile')
+        file=request.files['file']
+        filename=mobile+'.png'
+        if file:
+            filepath="pro/static/css/images/"+filename
+            file.save(filepath)
+        try:
+            path=session['db']
+            cname=str(path).split("/")[2]
+            cname=cname.split('.')[0]
+            subar=name
+            con=sql.connect(path)
+            cor=con.cursor()
+            cor.execute("select sno from student")
+            data=cor.fetchall()
+            print(data)
+            role="student"
+            if not data:   
+                suid=cname[0]+date+sudept+sec+"1"
+                cor.execute("insert into student(suid,suname,sudept,suemail,sumobile,cname,suphoto,supass,suclass,subar,role) values(?,?,?,?,?,?,?,?,?,?,?)",(suid,name,sudept,email,mobile,cname,filename,name,sec,subar,role))
+            else:
+                data=int(data[-1][0])+1
+                suid=cname[0]+date+sudept+sec+str(data)
+                cor.execute("insert into student(suid,suname,sudept,suemail,sumobile,cname,suphoto,supass,suclass,subar,role) values(?,?,?,?,?,?,?,?,?,?,?)",(suid,name,sudept,email,mobile,cname,filename,name,sec,subar,role))
 
+            con.commit()
+            con.close()
+            return redirect(url_for('main.suprofiles'))
+        except Exception as e:
+            print("insert erorr",e)
+
+        
+    return redirect(url_for('main.suprofiles'))    
 
 
         

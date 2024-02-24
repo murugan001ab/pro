@@ -3,7 +3,7 @@
 <div class="contents">
     <h3 class="title">Attendancesheet</h3>
     <center>
-        <form action="/asheet" method="post" class="form" autocomplete="off">
+        <form action="/sasheet" method="post" class="form" autocomplete="off">
             <table class="tablel">
                 <thead>
                     <tr>
@@ -18,7 +18,7 @@
                         <td><label for="" name="uid">{{i[0]}}</label></td>
                         <td><label for="" name="uname">{{i[1]}}</label></td>
                         <td>
-                            <input type="checkbox" name="uid" value="{{i[0]}}{{i[1]}}">
+                            <input type="checkbox" name="list" value="{{i[0]}},{{i[1]}}">
 
                         </td>
 

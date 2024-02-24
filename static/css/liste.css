@@ -1,6 +1,6 @@
 .content {
     position: relative;
-    #top: 60px;
+    top: 25px;
     width: 100vw;
     height: 100vh;
 }

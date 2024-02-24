@@ -8,11 +8,11 @@ import os
 idc=Blueprint('idc',__name__)
 def barcodeu(id):
     code128=barcode.get_barcode_class('code128')
-    idcardn=11111111111+id
+    idcardn=id
     bar=code128(str(idcardn),writer=ImageWriter())
     path=os.path.join("pro/static/id/userbar/",str(id))
     bar.save(path)
-def idcardu(cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar):
+def idcardu(idp,cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar):
     font1=ImageFont.truetype("pro/static/font/Barlow-Black.ttf",size=18)
     font3=ImageFont.truetype("pro/static/font/Roboto-Light.ttf",size=12)
     font2=ImageFont.truetype("pro/static/font/Barlow-Black.ttf",size=13)
@@ -50,7 +50,7 @@ def idcardu(cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar):
     cadd=cadd
     text_width=draw.textlength(cadd)
     image_width, image_height = id.size
-    position= ((image_width - text_width) // 2)-v+20,40
+    position= ((image_width - text_width) // 2)-v+10,40
     draw.text(position, cadd, fill="black", font=font3)
     #draw the compay number
     num='Cantact:'+str(cnum)
@@ -72,11 +72,11 @@ def idcardu(cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar):
     uname=uname
     text_width=draw.textlength(uname)
     image_width, image_height = id.size
-    position= ((image_width - text_width) // 2)-20,290
+    position= ((image_width - text_width) // 2)-10,290
     draw.text(position, uname, fill="black", font=font1)
     #user role draw
     urole=urole
-    draw.text((125,310), urole, fill="black", font=font2)
+    draw.text((135,310), urole, fill="black", font=font2)
     #draw a user phone num
     num="Phone no:"+str(unum)
     draw.text((80,330), num, fill="black", font=font2)
@@ -84,7 +84,7 @@ def idcardu(cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar):
     ubar=Image.open(ubar)
     ubar=ubar.resize((200,70),resample=Image.BICUBIC).crop((0,0,190,50))
     id.paste(ubar,(50,360))
-    path='pro/static/id/'+uname+'.png'
+    path='pro/static/id/'+idp+'.png'
     id.save(path)
 
 
@@ -97,7 +97,7 @@ def idcard():
         cname=cname[2].split('.')[0]
         print(cname)
         try:
-            con=sql.connect('org.db')
+            con=sql.connect("org.db")
             cur=con.cursor()
             cur.execute('select name,mobile,cadd,clogo from admins where name=?',(cname,))
             cdata=cur.fetchall()
@@ -105,27 +105,50 @@ def idcard():
                 cname=i[0]
                 cnum=i[1]
                 cadd=i[2]
-                clogo='pro/static/id/clogo/'+i[3]
+                clogo='pro/static/id/clogo/'+str(i[3])
             
             con.close()
         except Exception as e:
             print(e)
+        selected=request.args.get('list')
+        if selected=="staff":
+            con=sql.connect(session['db'])
+            cur=con.cursor()
+            cur.execute('select sid,sname,smobile,sbar,role from staff')
+            data=cur.fetchall()
+            print(data)
+            for j in data:
+                id=j[0]
+                uname=j[1]
+                unum=j[2]
+                sbar=j[3]
+                urole=j[4]
+                uphoto= "pro/static/css/images/"+uname+'.png'
 
+                ubar="pro/static/id/userbar/"+str(sbar)+'.png'
+                print(cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar)
+                barcodeu(sbar)
+                idcardu(id,cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar)
+            return render_template('idcard.html',data=data)
+        else:
+            con=sql.connect(session['db'])
+            cur=con.cursor()
+            cur.execute('select suid,suname,sumobile,subar,role from student')
+            data=cur.fetchall()
+            print(data)
+            for j in data:
+                idp=j[0]
+                uname=j[1]
+                unum=j[2]
+                sbar=j[3]
+                urole=j[4]
+                uphoto= "pro/static/css/images/"+uname+'.png'
 
-        con=sql.connect(session['db'])
-        cur=con.cursor()
-        cur.execute('select id,name,mobile,role from profiles')
-        data=cur.fetchall()
-        for j in data:
-            id=j[0]
-            uname=j[1]
-            unum=j[2]
-            urole=j[3]
-            uphoto= "pro/static/css/images/mmm.png"
-            barcodeu(id)
-            ubar="pro/static/id/userbar/"+str(id)+'.png'
-            idcardu(cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar)
-        return render_template('idcard.html',data=data)
+                ubar="pro/static/id/userbar/"+str(sbar)+'.png'
+                print(cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar)
+                barcodeu(sbar)
+                idcardu(idp,cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar)
+            return render_template('idcard.html',data=data)            
     return render_template('auth.login')
     
 

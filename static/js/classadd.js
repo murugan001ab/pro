@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const oover = document.querySelector('#oover');
 
     const profile = document.querySelector('.profile');
-    const prof = document.querySelector('.prof');
+    const prof = document.querySelector('.profi');
+    const profi = document.querySelector('.prof');
+
     const con = document.querySelector('#con');
     const pro = document.querySelector('.pro');
     const pro2 = document.querySelector('.pro2');
@@ -34,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     profile.addEventListener('click', () => {
         prof.classList.toggle('open')
+        profi.classList.toggle('open')
         con.classList.remove('open');
 
     });

@@ -27,7 +27,7 @@ def register():
         path='pro/static/id/clogo/'+clogon
         clogo.save(path)
         add=floar+','+street+','+city+','+pin
-        print(name,email,mobile,password,add,clogo.filename)
+        print(name,email,mobile,password,add,clogon)
         try:
             con=sql.connect('org.db')
             cur=con.cursor()
@@ -38,15 +38,15 @@ def register():
                 path=os.path.join('pro/db/',dbname)
                 con=sql.connect(path)
                 cor=con.cursor()
-                cor.execute('''create table if not exists profiles ( id INTEGER PRIMARY KEY  AUTOINCREMENT, name TEXT, class text, email TEXT, mobile INT, role TEXT, age INTEGER, file TEXT,cname text);''')
-                cor.execute('''create table if not exists newuser ( uid INTEGER PRIMARY KEY  AUTOINCREMENT, username TEXT, email TEXT, mobile NUMERIC(10), password TEXT);''')
-                cor.execute('''CREATE TABLE IF NOT EXISTS attendance (id INTEGER,username TEXT,time_in text,status TEXT,FOREIGN KEY (id) REFERENCES newuser(id),FOREIGN KEY (username) REFERENCES newuser(username))''')
+                cor.execute('''CREATE TABLE if not exists student (sno INTEGER not null,suid	TEXT NOT NULL,suname TEXT NOT NULL,suclass	TEXT,sudept	TEXT,sumobile	INTEGER,suemail	TEXT,suphoto	TEXT,subar	INTEGER,supass	TEXT,cname	TEXT ,role text,PRIMARY KEY(sno AUTOINCREMENT))''')
+                cor.execute('''CREATE TABLE if not exists staff (sno INTEGER  not null,sid TEXT NOT NULL,sname	TEXT NOT NULL,smobile	INTEGER,semail	TEXT,sdept	TEXT,cname	INTEGER,sphoto	TEXT,sbar	TEXT,spass	TEXT,role text,PRIMARY KEY(sno AUTOINCREMENT));''')
+                cor.execute('''CREATE TABLE IF NOT EXISTS attendance (id text not null,username TEXT,date text,stime_in text,status TEXT,role text,PRIMARY KEY(id))''')
                 con.commit()
                 con.close()
-            except:
-                print('data base create error')
-        except:
-            print('connection error')
+            except Exception as e:
+                print('data base create error',e)
+        except Exception as e:
+            print('connection error',e)
     return redirect(url_for('auth.login'))
 
 

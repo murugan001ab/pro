@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/adds.css')}}"> {% endblock %} {% block content%}
+
+<body>
+    <div class="form-container">
+        <form action="/addsu" method="post" enctype="multipart/form-data">
+            <div class="in">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="sec">Sec:</label>
+                    <select name="sec">
+                        <option value="a">A</option>
+                        <option value="b">B</option>
+                        <option value="c">C</option>
+                        </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="mobile">Mobile:</label>
+                    <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="dept">Dept:</label>
+                    <select name="dept">
+                        <option value="cs">Bsc-cs</option>
+                        <option value="bca">Bca</option>
+                        <option value="b.com">b.com</option>
+                        </select>
+                </div>
+                <div class="form-group">
+                    <label for="file">UPLOAD IMAGE:</label>
+                    <input type="file" id="file" name="file" accept=".png, .jpg, .svg">
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Submit</button>
+            </div>
+    </div>
+    </form>
+    </div>
+</body>
+
+{% endblock %}
