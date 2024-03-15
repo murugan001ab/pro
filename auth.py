@@ -40,7 +40,7 @@ def register():
                 cor=con.cursor()
                 cor.execute('''CREATE TABLE if not exists student (sno INTEGER not null,suid	TEXT NOT NULL,suname TEXT NOT NULL,suclass	TEXT,sudept	TEXT,sumobile	INTEGER,suemail	TEXT,suphoto	TEXT,subar	INTEGER,supass	TEXT,cname	TEXT ,role text,PRIMARY KEY(sno AUTOINCREMENT))''')
                 cor.execute('''CREATE TABLE if not exists staff (sno INTEGER  not null,sid TEXT NOT NULL,sname	TEXT NOT NULL,smobile	INTEGER,semail	TEXT,sdept	TEXT,cname	INTEGER,sphoto	TEXT,sbar	TEXT,spass	TEXT,role text,PRIMARY KEY(sno AUTOINCREMENT));''')
-                cor.execute('''CREATE TABLE IF NOT EXISTS attendance (id text not null,username TEXT,date text,stime_in text,status TEXT,role text,PRIMARY KEY(id))''')
+                cor.execute('''CREATE TABLE IF NOT EXISTS attendance (id text not null,username TEXT,date text,stime_in text,status TEXT,role text''')
                 con.commit()
                 con.close()
             except Exception as e:
@@ -84,9 +84,9 @@ def logina():
                       except:
                           print("connect error")
                   
-                      return render_template('dashboad.html')
+                      return redirect(url_for("main.dash"))
                   else:
-                      flash("incorrect password",'red')
+                      return render_template('login.html')
               else:
               
                   flash("incorrect username",'red')

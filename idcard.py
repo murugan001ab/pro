@@ -93,8 +93,8 @@ def idcard():
     if 'logged_in_admin' in session and session["logged_in_admin"]:
        
         db=session['db']
-        cname=str(db).split("/")
-        cname=cname[2].split('.')[0]
+        cname=str(db).split("/")[2]
+        cname=cname[:-3]
         print(cname)
         try:
             con=sql.connect("org.db")
@@ -123,7 +123,7 @@ def idcard():
                 unum=j[2]
                 sbar=j[3]
                 urole=j[4]
-                uphoto= "pro/static/css/images/"+uname+'.png'
+                uphoto= "pro/static/css/images/"+str(unum)+'.png'
 
                 ubar="pro/static/id/userbar/"+str(sbar)+'.png'
                 print(cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar)
@@ -142,7 +142,7 @@ def idcard():
                 unum=j[2]
                 sbar=j[3]
                 urole=j[4]
-                uphoto= "pro/static/css/images/"+uname+'.png'
+                uphoto= "pro/static/css/images/"+str(unum)+'.png'
 
                 ubar="pro/static/id/userbar/"+str(sbar)+'.png'
                 print(cname,cadd,cnum,clogo,uphoto,uname,urole,unum,ubar)

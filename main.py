@@ -12,7 +12,36 @@ def home():
 @main.route('/dash')
 def dash():
     if 'logged_in_admin' in session and session['logged_in_admin']:
-        return render_template('dashboad.html')
+        d=datetime.now()
+        date=d.strftime("%d/%m/%Y")
+        print(date)
+
+        db=session['db']
+        con=sql.connect(db)
+        cur=con.cursor()
+        cur.execute('select count(sno) from staff')
+        data=cur.fetchall()
+        totalstaff=data[0][0]
+        cur.execute('select count(sno) from student')
+        data=cur.fetchall()
+        totalstudent=data[0][0]
+        cur.execute('select count(*) from attendance where role="student" and date=?',(date,))
+        data=cur.fetchall()
+        print(data)
+        studentcome=data[0][0]
+        studentcomep=(studentcome/totalstudent)*100
+        print(studentcomep)
+        studentleave=totalstudent-studentcome
+        cur.execute('select count(*) from attendance where role="staff" and date=?',(date,))
+        data=cur.fetchall()
+        staffcome=data[0][0]
+        staffcomep=(staffcome/totalstaff)*100
+        staffleave=totalstaff-staffcome
+    
+
+
+
+        return render_template('dashboad.html',student=totalstudent,studentcome=studentcome,studentcomep=studentcomep,studentleave=studentleave,staff=totalstaff,staffcome=staffcome,staffcomep=staffcomep,staffleave=staffleave)
     else:
         return redirect(url_for('auth.userlogin'))
     
@@ -20,7 +49,8 @@ def dash():
 @main.route('/adds')
 def adds():
     if 'logged_in_admin' in session and session['logged_in_admin']:
-
+        
+       
 
         return render_template('adds.html')
     else:

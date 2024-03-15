@@ -23,11 +23,23 @@
         display: flex;
         align-self: auto;
         position: relative;
-        background-color: #8e44ad;
+        background-color: #a73902;
         border-radius: 7px;
     }
     
-    .box-c {
+    .box1 {
+        width: 200px;
+        height: 200px;
+        padding: 10px;
+        margin: 10px;
+        display: flex;
+        align-self: auto;
+        position: relative;
+        background-color: #1f32e2;
+        border-radius: 7px;
+    }
+    
+    .box .box-c {
         position: relative;
         padding: 5px;
         font-size: 25px;
@@ -38,7 +50,22 @@
         text-align: center;
         align-items: center;
         padding-top: 5px;
-        background-color: #9b59b6;
+        background-color: #a73902;
+        font-weight: 400;
+    }
+    
+    .box1 .box-c {
+        position: relative;
+        padding: 5px;
+        font-size: 25px;
+        border-radius: 2px;
+        width: 70px;
+        height: 50px;
+        color: white;
+        text-align: center;
+        align-items: center;
+        padding-top: 5px;
+        background-color: #1f32e2;
         font-weight: 400;
     }
     

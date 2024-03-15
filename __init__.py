@@ -14,6 +14,8 @@ def create_app():
     from .idcard import idc
     app.register_blueprint(idc)
     
+    from .face import face
+    app.register_blueprint(face)
     
     return app
 
