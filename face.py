@@ -1,118 +1,104 @@
+from flask import Flask, Response, render_template, Blueprint, session
 import cv2
-import numpy as np
-from flask import Flask, render_template,Blueprint,Response
-import pickle
-import face_recognition
-import os
-import numpy as np
-import cvzone
+from pyzbar.pyzbar import decode
+import sqlite3
 from datetime import datetime
 
-face=Blueprint('face',__name__)
-
-
-def gen_frames():
-    cap = cv2.VideoCapture(0)
-    cap.set(3, 640)
-    cap.set(4, 480)
-
-    imgBackground = cv2.imread('/home/hacker/Desktop/pro/resources/background.png')
-
-    folderModePath = '/home/hacker/Desktop/pro/resources/Modes'
-    modePathList = os.listdir(folderModePath)
-    imgModeList = []
-    for path in modePathList:
-        imgModeList.append(cv2.imread(os.path.join(folderModePath, path)))
-
-    print("Loading Encode File....")
-    file = open('pro/EncodeFile.p', 'rb')
-    encodeListKnownWithIds = pickle.load(file)
-    file.close()
-    encodeListKnown, studentIds = encodeListKnownWithIds
-    print("Encode File Loaded")
-
-    modeType = 0
-    counter = 0
-    id = -1
-    imgStudent = []
-
-    while True:
-        success, img = cap.read()
-
-        imgS = cv2.resize(img, (0, 0), None, 0.25, 0.25)
-        imgS = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-        faceCurrentFrame = face_recognition.face_locations(imgS)
-        encodeCurrentFrame = face_recognition.face_encodings(imgS, faceCurrentFrame)
-
-        imgBackground[162:162 + 480, 55:55 + 640] = img
-        imgBackground[44:44 + 633, 808:808 + 414] = imgModeList[modeType]
-
-        if faceCurrentFrame:
-
-            for encodeFace, faceLoc in zip(encodeCurrentFrame, faceCurrentFrame):
-                matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
-                faceDistance = face_recognition.face_distance(encodeListKnown, encodeFace)
-
-                matchIndex = np.argmin(faceDistance)
-
-                if matches[matchIndex]:
-                    y1, x2, y2, x1 = faceLoc
-                    y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
-                    bbox = 55 + x1, 162 + y1, x2 - x1, y2 - y1 
-                    imgBackground = cvzone.cornerRect(imgBackground, bbox, rt=0)
-                    id = studentIds[matchIndex]
-
-                    if counter == 0:
-                        cvzone.putTextRect(imgBackground, "Loading", (275, 400))
-                        counter = 1
-                        modeType = 1
-
-            if counter != 0:
-                if counter == 1:
-                    # Load student info directly from the filesystem or any other storage
-                    student_info_path = f'student_info/{id}.txt'
-                    with open(student_info_path, 'r') as f:
-                        student_info = f.read()
-                    print(student_info)
-
-                    # Load student image directly from the filesystem or any other storage
-                    img_student_path = f'student_images/{id}.png'
-                    imgStudent = cv2.imread(img_student_path)
-
-                if modeType != 3:
-                    if 10 < counter < 20:
-                        modeType = 2
-
-                    imgBackground[44:44 + 633, 808:808 + 414] = imgModeList[modeType]
-
-                    if counter <= 10:
-                        cv2.putText(imgBackground, str(student_info), (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-
-                        imgBackground[175:175 + 216, 909:909 + 216] = imgStudent
-
-                    counter += 1
-
-                    if counter >= 20:
-                        counter = 0 
-                        modeType = 0
-                        student_info = {}
-                        imgStudent = []
-                        imgBackground[44:44 + 633, 808:808 + 414] = imgModeList[modeType]
-        else:
-            modeType = 0
-            counter = 0
-
-        ret, buffer = cv2.imencode('.jpg', imgBackground)
-        imgBackground = cv2.imdecode(buffer, 1)
-        yield (b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
+face = Blueprint('face', __name__)
 
 
 
+# Route to render the HTML page with a close button
+@face.route('/bar')
+# Function to decode barcode and register attendance
 
-@face.route('/face')
-def facef():
+def bar():
+    # Assuming 'db' is set in the session somewhere before accessing it
+    
+    # Function to generate frames with barcode detection
+    # Route to display video stream with barcode detection
+    
+    # Render the template
+    return render_template('i.html')
+@face.route('/video_feed')
+def video_feed():
+    db = session.get('db')
+    print(db)
+    def gen_frames():
+        cap = cv2.VideoCapture(0)
+        while True:
+            success, frame = cap.read()
+            if not success:
+                break
+            # Convert frame to grayscale for better detection
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            # Perform barcode decoding and attendance registration
+            decode_and_register(gray)
+            # Encode frame to JPEG
+            ret, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    def decode_and_register(image):
+        # Decode barcodes
+        barcodes = decode(image)
+        # Connect to SQLite database
+        try:
+            conn = sqlite3.connect(db)
+            c = conn.cursor()
+        except:
+            print('connection error')
+        # Loop over detected barcodes
+        for barcode in barcodes:
+            # Extract barcode data
+            barcode_data = barcode.data.decode("utf-8")
+            # Fetch student or staff member details based on barcode data from the database
+            c.execute("SELECT bar FROM attendance WHERE bar=?", (barcode_data,))
+            row = c.fetchone()
+            try:
+                c.execute("SELECT sid,sname,sbar,role FROM staff WHERE sbar=?", (barcode_data,))
+                sid = c.fetchone()
+                print(sid)
+            except:
+                print('it is not staff')
+            
+            try:
+                c.execute("SELECT suid,suname,subar,role FROM student WHERE subar=?", (barcode_data,))
+                suid = c.fetchone()
+                print(suid)
+            except:
+                print('it is not student')
+            
+
+            if row is None:
+
+                d=datetime.now()
+                date=d.strftime("%d/%m/%Y")
+                time=d.strftime("%H:%M:%S")
+                
+                if sid: 
+                    id=sid[0]
+                    username=sid[1]
+                    status="present"
+                    role=sid[3]
+                    bar=sid[2]            # Insert attendance record into the database        
+                    c.execute("INSERT INTO attendance (id,username,date,stime_in,status,role,bar) VALUES (?,?,?,?,?,?,?)", (id,username,date,time,status,role,bar,))
+                    print(f"Attendance registered for: {barcode_data}")
+                else: 
+                    id=suid[0]
+                    username=suid[1]
+                    status="present"
+                    role=suid[3]
+                    bar=suid[2]            # Insert attendance record into the database        
+                    c.execute("INSERT INTO attendance (id,username,date,stime_in,status,role,bar) VALUES (?,?,?,?,?,?,?)", (id,username,date,time,status,role,bar,))
+                    print(f"Attendance registered for: {barcode_data}")
+                
+
+            else:
+                print('already registered')
+        # Commit the transaction and close the connection
+        conn.commit()
+        conn.close()
+
 
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-

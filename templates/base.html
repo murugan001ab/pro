@@ -5,80 +5,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/font-awesome.min.css')}}">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+
+    <!-- jQuery -->
+    <script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+    <!-- Bootstrap JS -->
     <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
-    <script src="{{url_for('static',filename='js/jqeery.min.js')}}"></script>
+    <!-- Custom JS -->
     <script src="{{url_for('static',filename='js/classadd.js')}}"></script>
+
     {% block head %}{% endblock%}
+    <style>
+        /* Add your custom CSS styles here */
+        /* For example: */
+        
+        .cantainer-menu {
+            background-color: #2c3e50;
+            /* Dark blue background */
+            color: #fff;
+            /* White text color */
+            font-family: Arial, sans-serif;
+            /* Custom font */
+            padding: 20px;
+        }
+        
+        .nav-pills li a {
+            color: #fff;
+            /* White text color */
+            text-decoration: none;
+        }
+        
+        .profile-info label {
+            font-weight: bold;
+        }
+        
+        .navbar {
+            background-color: #000000;
+            /* Red background */
+            font-family: "Lato", sans-serif;
+            /* Custom font */
+        }
+        
+        .navbar-brand {
+            color: #fff;
+            /* White text color */
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .navbar-nav li a {
+            color: #fff;
+            /* White text color */
+            font-size: 18px;
+        }
+        /* Add more styles as needed */
+        
+        .m,
+        .mm {
+            text-transform: uppercase;
+            font-size: larger;
+            color: rgb(197, 190, 190);
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="cantainer-menu" id="con">
-        <p>main</p>
+        <p class="m">main</p>
         <ul class="nav navbar-pills">
-            <li><a href="{{url_for('main.dash')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="{{url_for('main.attendance')}}">attandance</a></li>
-            <li><a href="{{url_for('main.profiles')}}">staffs</a></li>
-            <li><a href="{{url_for('main.suprofiles')}}">students</a></li>
-
+            <li><a href="{{url_for('main.dash')}}"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{{url_for('main.attendance')}}"><i class="fa fa-user-clock"></i> Attendance</a></li>
+            <li><a href="{{url_for('main.profiles')}}"><i class="fa fa-users"></i> Staff</a></li>
+            <li><a href="{{url_for('main.suprofiles')}}"><i class="fa fa-graduation-cap"></i> Students</a></li>
         </ul>
-        <p>management</p>
+        <p class="mm">management</p>
         <ul class="nav navbar-pills">
-            <li><a href="{{url_for('face.facef')}}">face register</a></li>
-            <li><a href="{{url_for('main.sasheet')}}">staff attendace</a></li>
-
-            <li><a href="{{url_for('main.suasheet')}}">student attendace</a></li>
-            <li><a href="{{url_for('idc.idcard')}}">ID Card</a></li>
+            <li><a href="{{url_for('face.bar')}}"><i class="fa fa-id-badge"></i> Face Register</a></li>
+            <li><a href="{{url_for('main.sasheet')}}"><i class="fa fa-clipboard-check"></i> Staff Attendance</a></li>
+            <li><a href="{{url_for('main.suasheet')}}"><i class="fa fa-clipboard-check"></i> Student Attendance</a></li>
+            <li><a href="{{url_for('idc.idcard')}}"><i class="fa fa-id-card"></i> ID Card</a></li>
         </ul>
         <div class="nav-overlay" id="over"></div>
     </div>
+
     <div class="cantainer navbar-fixed-top">
         <nav class="navbar navbar-inverse">
 
             <div class="container-fluid">
 
-                <button id="bar-b" class=" navbar-left bar-b">
+                <button id="bar-b" class="navbar-left bar-b">
                         <span class="bar"></span>
                         <span class="bar"></span> 
                         <span class="bar"></span>
-                    </button>
-                <h3 class=" nav navbar-nav brand">SJC</h3>
+                </button>
+                <h3 class="nav navbar-nav brand"><i class="fa fa-university"></i> SJC</h3>
                 <form class="navbar-form navbar-left" action="">
-                    <div class=" search">
+                    <div class="search">
                         <input type="text" class="search-bar" placeholder="Search"> <i class="fa fa-search search-b"></i>
 
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="bell"><a href="#"><i class="fa fa-bell"> <span class="badge notif">5</span></i></a>
-
-                    </li>
-                    <li><a href="{{url_for('auth.signout')}}"><i class="fa fa-sign-in"></i> sign out</a></li>
-                    <li><a href="#"><i class="fa fa-user"></i> about</a></li>
+                    <li class="bell"><a href="#"><i class="fa fa-bell"></i> <span class="badge notif">5</span></a></li>
+                    <li><a href="{{url_for('auth.signout')}}"><i class="fa fa-sign-out-alt"></i> Sign out</a></li>
+                    <li><a href="{{url_for('main.about')}}"><i class="fa fa-info-circle"></i> About</a></li>
                     <li class="profile">
-                        <a href="#"><img src="" alt=""></a>
+                        <a href="#">
+                            <img src="" alt="">
+                        </a>
                     </li>
                 </ul>
-
 
             </div>
         </nav>
     </div>
 
     <div class="prof">
-        <div class="profi">
-            <img src="" alt="" id="img">
-            <label for="">{{email}}</label>
-            <label for="">admin</label>
+        <div class="profile-content">
+            <div class="profile-info">
+                <img src="" alt="" id="img">
+                <label for="">{{email}}</label>
+                <label for="">Admin</label>
+            </div>
         </div>
         <div class="nav-overlay" id="oover"></div>
 
     </div>
-    <div class="nav-overlay" id="oover"></div>
-    </div>
+
     <div class="content"> {% block content %} {% endblock %}</div>
 </body>
 

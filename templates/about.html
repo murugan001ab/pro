@@ -1,0 +1,84 @@
+{% extends "base.html" %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St. Joseph's College</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        
+        h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        p {
+            text-align: justify;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .copyright {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h3>Profile of the College</h3>
+        <img src="{{ url_for('static', filename='c.jpg') }}" alt="College Image">
+        <p>
+            St. Joseph’s College is a legacy of the 19th century, handed down to us by the venerable fathers of the society of the Foreign Mission of Paris...
+            <!-- Your college profile text here -->
+        </p>
+        <!-- Other content goes here -->
+    </div>
+
+    <footer class="footer">
+        <div class="footer-top">
+            <!-- Footer content -->
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="copyright">
+                    <p>© 2024 All rights reserved by St.Joseph's College</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript code if needed -->
+
+</body>
+
+</html>
+{% endblock %}

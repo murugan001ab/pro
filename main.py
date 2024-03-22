@@ -17,6 +17,7 @@ def dash():
         print(date)
 
         db=session['db']
+        print(db)
         con=sql.connect(db)
         cur=con.cursor()
         cur.execute('select count(sno) from staff')
@@ -91,7 +92,7 @@ def addst():
             else:
                 data=int(data[-1][0])+1
                 sid=cname[0]+date+dept+role[0]+str(data)
-                cor.execute("insert into staff(sid,sname,sdept,semail,smobile,cname,sphoto,sbar,spass,role) values(?,?,?,?,?,?,?,?,?,?)",(sid,name,dept,email,mobile,cname,filename,name,name,role))
+                cor.execute("insert into staff(sid,sname,sdept,semail,smobile,cname,sphoto,sbar,spass,role) values(?,?,?,?,?,?,?,?,?,?)",(sid,name,dept,email,mobile,cname,filename,mobile,name,role))
 
             con.commit()
             con.close()
@@ -277,7 +278,7 @@ def addsu():
             path=session['db']
             cname=str(path).split("/")[2]
             cname=cname.split('.')[0]
-            subar=name
+            subar=mobile
             con=sql.connect(path)
             cor=con.cursor()
             cor.execute("select sno from student")
@@ -302,4 +303,12 @@ def addsu():
     return redirect(url_for('main.suprofiles'))    
 
 
+@main.route('/about')
+def about():
+    if 'logged_in_admin' in session and session['logged_in_admin']:
         
+       
+
+        return render_template('about.html')
+    else:
+        return redirect(url_for('auth.login'))     

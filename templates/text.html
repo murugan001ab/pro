@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+
+    <!-- jQuery -->
+    <script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+    <!-- Custom JS -->
+    <script src="{{url_for('static',filename='js/classadd.js')}}"></script>
+
+    {% block head %}{% endblock%}
+    <style>
+        /* Add your custom CSS styles here */
+        /* For example: */
+        
+        .cantainer-menu {
+            /* Your styles */
+        }
+        
+        .nav-pills li a {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-pills li a i {
+            margin-right: 5px;
+        }
+        /* Add more styles as needed */
+    </style>
+</head>
+
+<body>
+
+    <div class="cantainer-menu" id="con">
+        <p>main</p>
+        <ul class="nav navbar-pills">
+            <li><a href="{{url_for('main.dash')}}"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{{url_for('main.attendance')}}"><i class="fa fa-user-clock"></i> Attendance</a></li>
+            <li><a href="{{url_for('main.profiles')}}"><i class="fa fa-users"></i> Staff</a></li>
+            <li><a href="{{url_for('main.suprofiles')}}"><i class="fa fa-graduation-cap"></i> Students</a></li>
+        </ul>
+        <p>management</p>
+        <ul class="nav navbar-pills">
+            <li><a href="{{url_for('face.facef')}}"><i class="fa fa-id-badge"></i> Face Register</a></li>
+            <li><a href="{{url_for('main.sasheet')}}"><i class="fa fa-clipboard-check"></i> Staff Attendance</a></li>
+            <li><a href="{{url_for('main.suasheet')}}"><i class="fa fa-clipboard-check"></i> Student Attendance</a></li>
+            <li><a href="{{url_for('idc.idcard')}}"><i class="fa fa-id-card"></i> ID Card</a></li>
+        </ul>
+        <div class="nav-overlay" id="over"></div>
+    </div>
+
+    <div class="cantainer navbar-fixed-top">
+        <!-- Your Navbar content -->
+    </div>
+
+    <div class="prof">
+        <!-- Your Profile content -->
+    </div>
+
+    <div class="content"> {% block content %} {% endblock %}</div>
+</body>
+
+</html>
