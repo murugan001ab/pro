@@ -3,6 +3,7 @@ import cv2
 from pyzbar.pyzbar import decode
 import sqlite3
 from datetime import datetime
+from playsound import playsound
 
 face = Blueprint('face', __name__)
 
@@ -55,6 +56,9 @@ def video_feed():
             # Fetch student or staff member details based on barcode data from the database
             c.execute("SELECT bar FROM attendance WHERE bar=?", (barcode_data,))
             row = c.fetchone()
+
+
+
             try:
                 c.execute("SELECT sid,sname,sbar,role FROM staff WHERE sbar=?", (barcode_data,))
                 sid = c.fetchone()
@@ -71,7 +75,6 @@ def video_feed():
             
 
             if row is None:
-
                 d=datetime.now()
                 date=d.strftime("%d/%m/%Y")
                 time=d.strftime("%H:%M:%S")
@@ -84,7 +87,9 @@ def video_feed():
                     bar=sid[2]            # Insert attendance record into the database        
                     c.execute("INSERT INTO attendance (id,username,date,stime_in,status,role,bar) VALUES (?,?,?,?,?,?,?)", (id,username,date,time,status,role,bar,))
                     print(f"Attendance registered for: {barcode_data}")
-                else: 
+                    playsound('/home/hacker/Desktop/pro/static/sound/beep.mp3')
+
+                elif suid: 
                     id=suid[0]
                     username=suid[1]
                     status="present"
@@ -92,6 +97,10 @@ def video_feed():
                     bar=suid[2]            # Insert attendance record into the database        
                     c.execute("INSERT INTO attendance (id,username,date,stime_in,status,role,bar) VALUES (?,?,?,?,?,?,?)", (id,username,date,time,status,role,bar,))
                     print(f"Attendance registered for: {barcode_data}")
+                    playsound('/home/hacker/Desktop/pro/static/sound/beep.mp3')
+
+                else:
+                    print("invalid id card")
                 
 
             else:
