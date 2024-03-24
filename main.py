@@ -30,13 +30,19 @@ def dash():
         data=cur.fetchall()
         print(data)
         studentcome=data[0][0]
-        studentcomep=(studentcome/totalstudent)*100
+        if totalstudent==0:
+            studentcomep=0
+        else:    
+            studentcomep=(studentcome/totalstudent)*100
         print(studentcomep)
         studentleave=totalstudent-studentcome
         cur.execute('select count(*) from attendance where role="staff" and date=?',(date,))
         data=cur.fetchall()
         staffcome=data[0][0]
-        staffcomep=(staffcome/totalstaff)*100
+        if totalstaff==0:
+            staffcomep=0
+        else:
+            staffcomep=(staffcome/totalstaff)*100
         staffleave=totalstaff-staffcome
     
 

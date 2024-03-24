@@ -49,12 +49,15 @@ def video_feed():
             c = conn.cursor()
         except:
             print('connection error')
+        d=datetime.now()
+        date=d.strftime("%d/%m/%Y")
+        time=d.strftime("%H:%M:%S")
         # Loop over detected barcodes
         for barcode in barcodes:
             # Extract barcode data
             barcode_data = barcode.data.decode("utf-8")
             # Fetch student or staff member details based on barcode data from the database
-            c.execute("SELECT bar FROM attendance WHERE bar=?", (barcode_data,))
+            c.execute("SELECT bar,date FROM attendance WHERE bar=?", (barcode_data,))
             row = c.fetchone()
 
 
@@ -74,10 +77,8 @@ def video_feed():
                 print('it is not student')
             
 
-            if row is None:
-                d=datetime.now()
-                date=d.strftime("%d/%m/%Y")
-                time=d.strftime("%H:%M:%S")
+            if row[0] is None and row[1]!=date:
+                
                 
                 if sid: 
                     id=sid[0]

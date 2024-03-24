@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Bar with Submenu</title>
+    <style>
+        /* Basic styling for the menu */
+        
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+        }
+        /* Style for the main menu items */
+        
+        ul li {
+            display: inline-block;
+            position: relative;
+        }
+        /* Style for the main menu links */
+        
+        ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        /* Style for the sub-menu */
+        
+        ul li ul {
+            display: none;
+            position: absolute;
+            background-color: #444;
+            min-width: 120px;
+            z-index: 1;
+        }
+        /* Style for the sub-menu items */
+        
+        ul li ul li {
+            display: block;
+        }
+        /* Style for the sub-menu links */
+        
+        ul li ul li a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        /* Show sub-menu on hover */
+        
+        ul li:hover ul {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Menu Bar -->
+    <ul>
+        <li>
+            <a href="#">staff</a>
+            <!-- Submenu -->
+            <ul>
+                <li><a href="#">teaching</a></li>
+                <li><a href="#">NON teaching</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Student</a>
+            <!-- Submenu -->
+            <ul>
+                <li><a href="#">bsc</a></li>
+                <li><a href="#">Bsc-cs</a></li>
+                <li><a href="#">b.com</a></li>
+            </ul>
+        </li>
+
+    </ul>
+
+</body>
+
+</html>
