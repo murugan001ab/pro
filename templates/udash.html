@@ -2,46 +2,57 @@
 <link rel="stylesheet" href="{{url_for('static',filename='css/dashboard.css')}}"> {%endblock%} {% block content %}
 <div class="dash">
     <div class="heading">
-        <h3 class="title">Dashboad</h3>
-        <p class="welcome">Welcome to my attentance register</p>
+        <h3 class="title"> Student Dashboad</h3>
+        <p class="welcome">you can see student deatails</p>
     </div>
     <div class="cantainerdash">
-        <div class="box">
+        <div class="box1">
             <div class="box-c"><i class="fa fa-address-card-o" aria-hidden="true"></i></div>
             <div class="box-t">
-                <h4 class="box-ti">Total <br>present</h4>
+                <h4 class="box-ti">Total <br>Student</h4>
             </div>
-            <div class="box-l"><label for="">----</label></div>
+            <div class="box-l"><label for="">{{student}}</label></div>
             <div class="box-f"><i class="fa fa-user-circle" aria-hidden="true"></i></div>
             <div class="box-li"><a href="">more info<i class="fa fa-arrow-right" aria-hidden="true"></i></a></div>
 
 
         </div>
-        <div class="box">
+        <div class="box1">
             <div class="box-c"><i class="fa fa-clock-o" aria-hidden="true"></i></i>
                 </i>
             </div>
             <div class="box-t">
-                <h4 class="box-ti">total <br>Leave</h4>
+                <h4 class="box-ti">On time <br>Persentage</h4>
             </div>
-            <div class="box-l"><label for="">---%-</label></div>
+            <div class="box-l"><label for="">{{studentcomep}}%</label></div>
             <div class="box-p"></div>
             <div class="box-li"><a href="">more info<i class="fa fa-arrow-right" aria-hidden="true"></i></a></div>
 
 
         </div>
-        <div class="box">
+        <div class="box1">
             <div class="box-c"><i class="fa fa-check-square-o" aria-hidden="true"></i></div>
             <div class="box-t">
-                <h4 class="box-ti">present <br>persentage</h4>
+                <h4 class="box-ti">On Time <br>Today</h4>
             </div>
-            <div class="box-l"><label for="">----</label></div>
+            <div class="box-l"><label for="">{{studentcome}}</label></div>
             <div class="box-p"></div>
             <div class="box-li"><a href="">more info<i class="fa fa-arrow-right" aria-hidden="true"></i></a></div>
 
 
         </div>
+        <div class="box1">
+            <div class="box-c"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <div class="box-t">
+                <h4 class="box-ti">Late Today</h4>
+            </div>
+            <div class="box-l"><label for="">{{studentleave}}</label></div>
+            <div class="box-p"></div>
+            <div class="box-li"><a href="">more info<i class="fa fa-arrow-right" aria-hidden="true"></i></a></div>
 
+
+        </div>
     </div>
 </div>
 {%endblock%}

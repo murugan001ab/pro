@@ -55,7 +55,32 @@ def dash():
 @main.route('/udash')
 def udash():
     if 'logged_in' in session and session['logged_in']:
-        return render_template('udash.html')
+        d=datetime.now()
+        date=d.strftime("%d/%m/%Y")
+        print(date)
+        db=session['db']
+        print(db)
+        con=sql.connect(db)
+        cur=con.cursor()
+        sname=session['sname']
+        cur.execute("select sdept from staff where sname=?",(sname,))
+        sdept=cur.fetchone()    
+        print(sdept)
+        cur.execute('select count(sno) from student where suid like ?',('%'+sdept[0]+'%',))
+        data=cur.fetchall()
+        totalstudent=data[0][0]
+        cur.execute('select count(*) from attendance where role="student" and date=? and id like ?',(date,'%'+sdept[0]+'%',))
+        data=cur.fetchall()
+        print(data)
+        studentcome=data[0][0]
+        if totalstudent==0:
+            studentcomep=0
+        else:    
+            studentcomep=(studentcome/totalstudent)*100
+        print(studentcomep)
+        studentleave=totalstudent-studentcome
+
+        return render_template('udash.html',student=totalstudent,studentcome=studentcome,studentcomep=studentcomep,studentleave=studentleave)
     else:
         return redirect(url_for('auth.userlogin'))
     
@@ -187,9 +212,11 @@ def ssuasheet():
     if 'logged_in_admin' in session and session['logged_in_admin']:
         
         path=session['udb']
-        sname=session['sname']
         con=sql.connect(path)
         cur=con.cursor()
+
+        sname=session['sname']
+
         cur.execute("select sdept from staff where sname=?",(sname,))
         sdept=cur.fetchone()    
         print(sdept)

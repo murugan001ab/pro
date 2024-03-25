@@ -29,7 +29,7 @@ def register():
         add=floar+','+street+','+city+','+pin
         print(name,email,mobile,password,add,clogon)
         try:
-            con=sql.connect('org.db')
+            con=sql.connect('pro/db/org.db')
             cur=con.cursor()
             cur.execute("insert into admins(name,email,mobile,password,cadd,clogo) values(?,?,?,?,?,?)",(name,email,mobile,password,add,clogon))
             con.commit()
@@ -59,7 +59,7 @@ def logina():
     if request.method=='POST':
         username=request.form.get('username')
         password=request.form.get('password')
-        con=sql.connect('org.db')
+        con=sql.connect('pro/db/org.db')
         cur=con.cursor()
         try:
             cur.execute("select aid,name,email,password from admins")
@@ -123,7 +123,7 @@ def loginu():
                   session['udb']=path
                   session['sname']=username
                   
-                  return render_template('udash.html')
+                  return redirect(url_for('main.udash'))
              
     return redirect(url_for('auth.userlogin'))
 
@@ -194,7 +194,7 @@ def user_forget():
         elif action=='change':
             otpr=request.form.get('otp') 
             username=request.form.get('username')
-            con=sql.connect('org.db')
+            con=sql.connect('pro/db/org.db')
             cur=con.cursor()
             cur.execute("select * from admins")
             data=cur.fetchall()
