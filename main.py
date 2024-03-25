@@ -51,6 +51,13 @@ def dash():
         return render_template('dashboad.html',student=totalstudent,studentcome=studentcome,studentcomep=studentcomep,studentleave=studentleave,staff=totalstaff,staffcome=staffcome,staffcomep=staffcomep,staffleave=staffleave)
     else:
         return redirect(url_for('auth.userlogin'))
+
+@main.route('/udash')
+def udash():
+    if 'logged_in' in session and session['logged_in']:
+        return render_template('udash.html')
+    else:
+        return redirect(url_for('auth.userlogin'))
     
 
 @main.route('/adds')
@@ -174,7 +181,59 @@ def suasheet():
         return render_template('suas.html',data=data)
     else:
         return redirect(url_for('auth.login'))
+
+@main.route('/ssuasheet')
+def ssuasheet():
+    if 'logged_in_admin' in session and session['logged_in_admin']:
+        
+        path=session['udb']
+        sname=session['sname']
+        con=sql.connect(path)
+        cur=con.cursor()
+        cur.execute("select sdept from staff where sname=?",(sname,))
+        sdept=cur.fetchone()    
+        print(sdept)
+        cur.execute("select suid,suname from student where sudept=?",(sdept[0],))
+        data=cur.fetchall()
+
+        return render_template('ssua.html',data=data)
+    else:
+        return redirect(url_for('auth.login'))
+@main.route('/ssuasheet',methods=['POST'])
+def ssuasheetd():
+    if request.method=="POST":
+        d=datetime.now()
+        date=d.strftime("%d/%m/%Y")
+        time=d.strftime("%H:%M:%S")
+        path=session['db']
+        con=sql.connect(path)
+        cur=con.cursor()
+
+        student_selected=[]
+        student_selected=request.form.getlist('list')
+        role="student"
+        print(student_selected)
+        for i in student_selected:
+            status='present'
+            i,j=i.split(",")[0],i.split(",")[1]
+            print(i,j)
+            try:
+                cur.execute("select id,date from attendance where username=? and date=?",(str(i),date))
+                data=cur.fetchall()
+                if len(data)==0:
+
+                    cur.execute("insert into attendance(id,username,date,stime_in,status,role) values(?,?,?,?,?,?)",(str(i),str(j),date,time,status,role))
+                    con.commit()
+                    
+                else:
+                    print(data)
+            except Exception as e:
+                print("insert error",e)
+
+    return redirect(url_for("main.ua"))
     
+
+
 @main.route('/suasheet',methods=['POST'])
 def suasheetd():
     if request.method=="POST":
@@ -220,6 +279,22 @@ def attendance():
         cur.execute("select * from attendance where date=? and role=?",(date,role))
         data=cur.fetchall()
         return render_template('attendance.html',data=data)
+    else:
+        return redirect(url_for('auth.login'))
+@main.route('/ua')
+def ua():
+    if 'logged_in_admin' in session and session['logged_in_admin']:
+        date=datetime.today().strftime("%d/%m/%Y")
+        role="student"
+        con=sql.connect(session['db'])
+        sname=session['sname']
+        cur=con.cursor()
+        cur.execute("select sdept from staff where sname=?",(sname,))
+        sdept=cur.fetchone()    
+        print(sdept)
+        cur.execute("select * from attendance where date=? and role=? and id LIKE ?",(date,role,'%'+sdept[0]+'%'))
+        data=cur.fetchall()
+        return render_template('ua.html',data=data)
     else:
         return redirect(url_for('auth.login'))
 

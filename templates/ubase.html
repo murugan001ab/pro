@@ -21,13 +21,14 @@
     <div class="cantainer-menu" id="con">
         <p>user</p>
         <ul class="nav navbar-pills">
-            <li><a href="{{url_for('auth.base')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li><a href="{{url_for('main.udash')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 
         </ul>
 
         <ul class="nav navbar-pills">
-            <li><a href="#">face register</a></li>
-            <li><a href="#">attandance sheet</a></li>
+            <li><a href="{{url_for('main.ssuasheet')}}">Student Attendance</a></li>
+            <li><a href="{{url_for('face.ubar')}}">Scanner</a></li>
+            <li><a href="{{url_for('main.ua')}}">attandance sheet</a></li>
 
         </ul>
         <div class="nav-overlay" id="over"></div>
@@ -61,7 +62,7 @@
                     <li class="bell"><a href="#"><i class="fa fa-bell"> <span class="badge notif">5</span></i></a>
 
                     </li>
-                    <li><a href="{{url_for('auth.login')}}"><i class="fa fa-sign-in"></i> sign in</a></li>
+                    <li><a href="{{url_for('main.home')}}"><i class="fa fa-sign-in"></i> sign in</a></li>
                     <li><a href="#"><i class="fa fa-user"></i> about</a></li>
                     <li class=" profile">
                         <a href="#"><img src="" alt=""></a>

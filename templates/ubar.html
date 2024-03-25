@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Stream with Barcode Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        h1 {
+            margin-top: 20px;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            margin-left: 200px;
+            margin-top: 50px;
+        }
+        
+        button {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-left: 100px;
+            height: 50px;
+            text-align: center;
+            margin-top: 300px;
+        }
+        
+        button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="{{ url_for('face.video_feed') }}" alt="Video Stream">
+    <button onclick="stopVideo()">Close</button>
+    <script>
+        // Function to stop the video stream
+        function stopVideo() {
+            // Redirect to the root URL to stop the video stream
+            window.location.href = "/udash";
+        }
+    </script>
+</body>
+
+</html>

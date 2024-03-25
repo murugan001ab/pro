@@ -23,15 +23,13 @@
             </div>
             <div class="remeber-forget">
                 <label> <input type="checkbox">remeber me</label>
-                <a href="">Forgetpassword?</a>
+                <a href="{{url_for( 'auth.forget')}} ">Forgetpassword?</a>
             </div>
 
-            <button type="submit" class="btn">Login</button>
+            <button type="submit " class="btn ">Login</button>
 
-            <div class="register">
-                <p>Dont't have an account?<a href="">Register</a></p>
-            </div>
-            <script src="{{url_for('static',filename='js/login.js')}}"></script>
+
+            <script src="{{url_for( 'static',filename='js/login.js' )}} "></script>
         </form>
     </div>
 </body>

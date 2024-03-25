@@ -109,28 +109,25 @@ def loginu():
         cname=request.form.get('cname')
         username=request.form.get('username')
         password=request.form.get('password')
-    
-        con=sql.connect('org.db')
-        cur=con.cursor()
-        cur.execute("select name from admins")
-        data=cur.fetchall()
-        for i in data:
-            if i[0]==cname:
-                  dbname=cname+'.db'
-        print(dbname)
+        dbname=cname+".db"
         path=os.path.join('pro/db/',dbname)
         con=sql.connect(path)
         cur=con.cursor()
-        cur.execute("select uid,username,email,mobile,password from newuser")
+        cur.execute("select sname,spass,sdept from staff")
         data=cur.fetchall()
         for i in data:
-          if (i[1] or i[2])==username:
-              if (i[4])==password:
+          if (i[0])==username:
+              if (i[1])==password:
                   session['logged_in']=True
+                  path=os.path.join('pro/db/',dbname)
+                  session['udb']=path
+                  session['sname']=username
                   
                   return render_template('udash.html')
              
     return redirect(url_for('auth.userlogin'))
+
+
 
 @auth.route('/base')
 def base():

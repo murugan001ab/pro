@@ -1,0 +1,35 @@
+{% extends "ubase.html"%} {% block head%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/attendance.css')}}"> {%endblock%} {% block content %}
+<div class="content">
+    <h3 class="title">Attendance</h3>
+    <p class="p">today student attendance</p>
+    <center>
+
+    </center>
+    <table class="tablel">
+        <thead>
+            <tr>
+                <th>S.no</th>
+
+                <th>Employee Id</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Time in</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+                <td>{{i[2]}}</td>
+                <td>{{i[3]}}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{%endblock%}
